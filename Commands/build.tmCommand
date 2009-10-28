@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>saveModifiedFiles</string>
+	<key>command</key>
+	<string>cd "${TM_PROJECT_DIRECTORY}"
+"${TM_PROJECT_DIRECTORY}/waf-1.5.8" 2&gt;&amp;1 | python "${TM_BUNDLE_SUPPORT}/bin/waf2html.py" "${TM_PROJECT_DIRECTORY}"
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>@b</string>
+	<key>name</key>
+	<string>build</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>uuid</key>
+	<string>847D39F8-90A5-4244-9EE1-EAF8CA185470</string>
+</dict>
+</plist>
