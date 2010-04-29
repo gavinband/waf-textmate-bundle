@@ -6,7 +6,8 @@
 	<string>saveModifiedFiles</string>
 	<key>command</key>
 	<string>cd "${TM_PROJECT_DIRECTORY}"
-"${TM_PROJECT_DIRECTORY}/waf-1.5.8" 2&gt;&amp;1 | python "${TM_BUNDLE_SUPPORT}/bin/waf2html.py" "${TM_PROJECT_DIRECTORY}"
+python "${TM_BUNDLE_SUPPORT}/bin/runwaf.py"
+#"${TM_PROJECT_DIRECTORY}/waf-1.5.8" 2&gt;&amp;1 | python "${TM_BUNDLE_SUPPORT}/bin/waf2html.py" "${TM_PROJECT_DIRECTORY}"
 </string>
 	<key>input</key>
 	<string>none</string>

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys 
+import htmlentitydefs # for html special char support
 
 if len( sys.argv ) > 1:
 	project_dir = sys.argv[1]
@@ -33,6 +34,7 @@ def replace_quoted_regions( line ):
 			quoted_region = line[ openquote + 1: closequote ]
 			result += line[0 : openquote] + '<b>' + quoted_region + '</b>'
 			line = line[ closequote + 1: ]
+			openquote = line.find( u"\u2018" )
 		else:
 			break
 	result += line
@@ -60,8 +62,9 @@ def parse_diagnostic_line( line ):
 				line_number = None
 				pass
 
+		line = process_html_special_chars( line )
 		line = replace_quoted_regions( line )
-		
+
 		if line_number is not None:
 			result = (
 				'<p><a href="txmt://open/?url=file://'
@@ -87,31 +90,40 @@ def parse_diagnostic_line( line ):
 			)
 			
 	else:
-		result = '<p>' + line + '</p>\n'
+		result = '<p>' + process_html_special_chars( line ) + '</p>\n'
 
 	return result
 
+def process_html_special_chars( text ):
+	text = text.replace( u"&", u"&amp; " )
+	text = text.replace( u"<", u"&lt; " )
+	text = text.replace( u">", u"&gt; " )
+	return text
 
 def main():
-	
-	
-	sys.stdout.write( '<html><head></head><body>')
+	sys.stdout.write(
+	"""<html>
+	<head>
+	</head>
+	<body>
+""" )
 
 	for line in sys.stdin:
 		line = line.strip()
 		line = line.decode( 'utf-8' )
+
 		if len( line ) == 0:
 			pass
 		elif line[0] == '|':
-			sys.stdout.write( parse_progress_line( line ).encode( 'utf-8' ))
+			result = parse_progress_line( line )
 		elif line.find( "Entering directory" ) != -1:
-			sys.stdout.write( parse_dir_line( line ).encode( 'utf-8' ))
+			result = parse_dir_line( line )
 		else:
-			sys.stdout.write( parse_diagnostic_line( line ).encode( 'utf-8' ))
+			result = parse_diagnostic_line( line )
 
+		sys.stdout.write( result.encode( 'utf-8' ))
 		sys.stdout.flush()
-
-	sys.stdout.write( '<html><head></head></body>')
+	sys.stdout.write( "</body>")
 
 if __name__ == "__main__":
 	main()
