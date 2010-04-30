@@ -32,6 +32,14 @@ sys.stdout.write(
 				margin: 2px ;
 				padding: 4px ;
 			}
+			
+			#diagnostics > div {
+				width: 100px;
+				height: 10px;
+				margin-left: 10px;
+				float: left ;
+				font-size: 10px ;
+			}
 		</style>
 		<script>
 			function getElement( name ) {
@@ -128,6 +136,10 @@ sys.stdout.write(
 				process.onreadoutput = outputHandler ;
 				process.onreaderror = outputHandler ;
 			}
+			
+			function showWarnings() {
+				getElement( "warnings" ).style.visibility = "visible" ;
+			}
 		</script>
 	</head>
 	<body onLoad="runWaf() ; ">
@@ -145,9 +157,9 @@ sys.stdout.write(
 			</div>
 		</div>
 		<div id="diagnostics" style="width: 800px; height: 20px">
-			<div id="error_count" styly="width: 100px; height: 10px; margin-left: 10px; float: left ; font-size: 10px ;">
+			<div id="error_count" >
 			</div>
-			<div id="warning_count" styly="width: 100px; height: 10px; margin-left: 10px; float: left ; font-size: 10px ;">
+			<div id="warning_count" onClick = "showWarnings() ;" >
 			</div>
 		</div>
 		<div id="output">
